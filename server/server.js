@@ -6,7 +6,8 @@ import cookieParser from "cookie-parser";
 import db from "./config/db.js";
 
 import users_router from './routes/Users.js';
-import countries_router from "./routes/Countries.js";
+import places_router from "./routes/Places.js";
+import populate_router from "./routes/Populating.js";
 
 
 dotenv.config();
@@ -25,7 +26,9 @@ app.listen(PORT || 8080, HOST, () => {
 });
 
 app.use('/users', users_router);
-app.use('/countries', countries_router)
+app.use('/places', places_router);
+app.use('/populate', populate_router);
+
 
 try {
     await db.authenticate();

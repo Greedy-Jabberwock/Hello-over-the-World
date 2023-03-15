@@ -10,8 +10,12 @@ const Cities = db.define(
             type: DataTypes.STRING,
             allowNull: false
         },
-        coordinates: {
-            type: DataTypes.STRING,
+        latitude : {
+            type: DataTypes.FLOAT,
+            allowNull: false
+        },
+        longitude  : {
+            type: DataTypes.FLOAT,
             allowNull: false
         },
         fk_country_id: {
