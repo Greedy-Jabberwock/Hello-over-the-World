@@ -1,8 +1,12 @@
 import express from "express";
-import { hello } from "../controllers/Users.js";
+import { getUsers, register, login } from "../controllers/Users.js";
+import { verifyToken } from "../middlewares/verifyToken.js";
 
-const router = express.Router();
+const users_router = express.Router();
 
-router.get('/', hello);
+users_router
+.get('/', verifyToken, getUsers)
+.post('/register', register)
+.post('/login', login)
 
-export default router;
+export default users_router;

@@ -3,7 +3,11 @@ import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
-import router from './routes/Users.js';
+import db from "./config/db.js";
+
+import users_router from './routes/Users.js';
+import countries_router from "./routes/Countries.js";
+
 
 dotenv.config();
 
@@ -20,4 +24,12 @@ app.listen(PORT || 8080, HOST, () => {
     console.log(`Server is running on http://${HOST}:${PORT}`);
 });
 
-app.use(router);
+app.use('/users', users_router);
+app.use('/countries', countries_router)
+
+try {
+    await db.authenticate();
+    console.log('Database connected...');
+} catch (error) {
+    console.log(error);
+}

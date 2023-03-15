@@ -49,16 +49,32 @@ export const populateCountries = async (req, res) => {
     res.send('Already populated')
 }
 
+
+// NEED: find the way to fetch API with interval to prevent too many requests error
 export const populateCities = async (req, res) => {
     try {
         const countries = await Countries.findAll(
             {attributes: ['country_id', 'code', 'name']}
         );
         
-        countries.forEach(async country => {
+        // countries.forEach(async country => {
             
+        //     const data = {"country": countries[0].name.toLowerCase()};
+
+        //     const config = {
+        //     method: 'get',
+        //     maxBodyLength: Infinity,
+        //     url: 'https://georocket.net/api/cities',
+        //     params: {
+                
+        //     },
+        //     headers: { },
+        //     data : data
+        //     };
+
             
-        })
+
+        // })
 
         res.json('ok');
     } catch (error) {
