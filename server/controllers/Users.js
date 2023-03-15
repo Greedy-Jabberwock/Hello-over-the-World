@@ -39,7 +39,7 @@ export const register = async(req, res) => {
 
 export const login = async (req, res) => {
     try {
-        console.log('Searching');
+        // console.log('Searching');
         const users = await Users.findAll(
             {
                 where: {
@@ -51,7 +51,7 @@ export const login = async (req, res) => {
                 attributes: ['username', 'email', 'password']
             }
         );
-        console.log('Matching password');
+        // console.log('Matching password');
         const match = await bcrypt.compare(
             req.body.password,
             users[0].password
@@ -62,9 +62,9 @@ export const login = async (req, res) => {
                     .status(400)
                     .json({msg: 'Wrong password'});
         }
-        console.log('Get user');
+        // console.log('Get user');
         const { userid, email, username } = users[0];
-        console.log('Sign token');
+        // console.log('Sign token');
         const token = jwt.sign(
             {
                 userid,
@@ -76,7 +76,7 @@ export const login = async (req, res) => {
                 expiresIn: '180s'
             }
         );
-        console.log('Create cookie');
+        // console.log('Create cookie');
         res.cookie(
             'accesstoken', 
             token,
@@ -85,11 +85,11 @@ export const login = async (req, res) => {
                 maxAge: 180 * 1000
             }
         );
-        console.log('Send responce');
+        // console.log('Send responce');
         res.json({token});
 
     } catch (error) {
-        console.log('ERROR:', error.message);
+        // console.log('ERROR:', error.message);
         res
         .status(404)
         .json({msg: "Email or username not found"});

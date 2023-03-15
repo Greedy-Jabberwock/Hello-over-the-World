@@ -12,6 +12,30 @@ export const getCountries = async (req, res) => {
     }
 };
 
+export const getCitiesInCountry = async (req, res) => {
+    const countryCode = req.query.code;
+    try {
+        const country = await Countries.findAll(
+            {   
+                where: {
+                    code: countryCode
+                },
+                attributes: ['country_id'],
+                returning: ['country_id']
+            }
+        )
+        const cities = await Cities.findAll({
+            where: {
+                fk_country_id: country[0].dataValues.country_id
+            },
+            attributes: ['name', 'latitude', 'longitude']
+        });
+        res.json(cities)
+    } catch (error) {
+        res.status(404).send(error)
+    }
+}
+
 export const getCities = async (req, res) => {
     try {
         const cities = await Cities.findAll(
