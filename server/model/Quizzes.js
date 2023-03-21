@@ -6,6 +6,10 @@ const { DataTypes } = Sequelize;
 const Quizzes = db.define(
     'quizzes',
     {
+        quizz_id: {
+            type: DataTypes.INTEGER,
+            autoIncrementIdentity: true
+        },
         answers: {
             type: DataTypes.TEXT,
             allowNull: false
@@ -16,10 +20,12 @@ const Quizzes = db.define(
             defaultValue: DataTypes.NOW
         },
         fk_author_id: {
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
+            allowNull: false
         },
-        fk_city_id: {
-            type: DataTypes.INTEGER
+        fk_place_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false
         }
     },
     {

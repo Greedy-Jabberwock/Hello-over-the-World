@@ -6,6 +6,10 @@ const { DataTypes } = Sequelize;
 const Articles = db.define(
     'articles',
     {
+        article_id : {
+            type: DataTypes.INTEGER,
+            autoIncrementIdentity: true
+        },
         title: {
             type: DataTypes.STRING,
             allowNull: false
@@ -19,10 +23,12 @@ const Articles = db.define(
             defaultValue: DataTypes.NOW
         },
         fk_author_id: {
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
+            allowNull: false
         },
-        fk_city_id: {
-            type: DataTypes.INTEGER
+        fk_place_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false
         }
     },
     {

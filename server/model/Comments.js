@@ -6,6 +6,10 @@ const { DataTypes } = Sequelize;
 const Comments = db.define(
     'comments',
     {
+        comment_id: {
+            type: DataTypes.INTEGER,
+            autoIncrementIdentity: true
+        },
         content: {
             type: DataTypes.TEXT,
             allowNull: false
@@ -15,8 +19,13 @@ const Comments = db.define(
             allowNull: false,
             defaultValue: DataTypes.NOW
         },
+        fk_article_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
         fk_author_id: {
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
+            allowNull: false
         }
     },
     {

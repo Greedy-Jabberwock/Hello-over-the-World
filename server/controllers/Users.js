@@ -27,7 +27,7 @@ export const register = async(req, res) => {
                 password: hashed_password
             },
             {
-                fields: ['userid', 'username', 'email', 'password'],
+                fields: ['user_id', 'username', 'email', 'password'],
                 returning: ['username', 'email', 'password']
             }
         );

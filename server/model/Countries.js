@@ -6,6 +6,10 @@ const { DataTypes } = Sequelize;
 const Countries = db.define(
     'countries',
     {
+        country_id: {
+            type: DataTypes.INTEGER,
+            autoIncrementIdentity: true
+        },
         code: {
             type: DataTypes.STRING,
             allowNull: false,

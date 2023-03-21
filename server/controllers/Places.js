@@ -1,50 +1,25 @@
-import Countries from "../model/Countries.js";
-import Cities from "../model/Cities.js";
+import Places from '../model/Places.js';
+import Countries from '../model/Places.js';
 
-export const getCountries = async (req, res) => {
+export const getPlaces = async (req, res) => {
     try {
-        const countries = await Countries.findAll(
-            {attributes: ['country_id', 'code', 'name']}
-        );
-        res.json(countries);
+        const places = await Places.findAll();
+        res.json(places);
     } catch (error) {
-        res.status(404).json({msg: error});
+        res.status(400).send({msg: 'Smtng goes wrong'});
+        console.log(error.message);
     }
 };
 
-export const getCitiesInCountry = async (req, res) => {
-    const countryCode = req.query.code;
+export const createPlace = async (req, res) => {
+    const { name, coordinates, country } = req.body;
     try {
-        const country = await Countries.findAll(
-            {   
-                where: {
-                    code: countryCode
-                },
-                attributes: ['country_id'],
-                returning: ['country_id']
+        await Places.create(
+            {
+                name,
             }
         )
-        const cities = await Cities.findAll({
-            where: {
-                fk_country_id: country[0].dataValues.country_id
-            },
-            attributes: ['name', 'latitude', 'longitude']
-        });
-        res.json(cities)
     } catch (error) {
-        res.status(404).send(error)
+        
     }
 }
-
-export const getCities = async (req, res) => {
-    try {
-        const cities = await Cities.findAll(
-            {attributes: ['city_id', 'name', 'latitude', 'longitude', "fk_country_id"]}
-        );
-        res.json(cities);
-    } catch (error) {
-        res.status(404).json({msg: error});
-    }
-}
-
-
