@@ -1,4 +1,4 @@
-import { Navbar } from 'react-bootstrap';
+import { Navbar, Button, Nav } from 'react-bootstrap';
 
 const Header = () => {
     return (
@@ -6,9 +6,12 @@ const Header = () => {
             <Navbar.Brand href="#home">Hello over the World</Navbar.Brand>
             <Navbar.Toggle />
             <Navbar.Collapse className="justify-content-end">
-                <Navbar.Text>
+                {/* <Navbar.Text>
                     Signed in as: <a href="#login">Mark Otto</a>
-                </Navbar.Text>
+                </Navbar.Text> */}
+                <Nav>
+                    <Nav.Link href="#login">Sign In</Nav.Link>
+                </Nav>
             </Navbar.Collapse>
         </Navbar>
     )

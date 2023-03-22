@@ -49,16 +49,15 @@ const Map = () => {
                         >
 
                             <LocationOn
-                                onClick={() => {
-                                    setShowPopup(true);
-                                }} />
+                                onClick={() => { setShowPopup(true); }} />
                             {/* <span>{point.name}</span> */}
                             {showPopup && (
                                 <Popup
                                     longitude={point.longitude}
                                     latitude={point.latitude}
                                     anchor='bottom'
-                                    onClose={() => setShowPopup(false)}>
+                                    onClose={() => setShowPopup(false)}
+                                >
                                     You are here
                                 </Popup>
                             )}
