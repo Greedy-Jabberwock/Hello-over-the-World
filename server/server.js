@@ -6,13 +6,13 @@ import cookieParser from "cookie-parser";
 import db from "./config/db.js";
 
 import users_router from './routes/Users.js';
-import populate_router from "./routes/Populating.js";
+import places_router from "./routes/Places.js";
 
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8080;
 const HOST = process.env.HOST;
 
 app.use(cors());
@@ -24,9 +24,8 @@ app.listen(PORT || 8080, HOST, () => {
     console.log(`Server is running on http://${HOST}:${PORT}`);
 });
 
-app.use('/users', users_router);
-app.use('/populate', populate_router);
-
+app.use('/api/users', users_router);
+app.use('/api/places', places_router);
 
 try {
     await db.authenticate();

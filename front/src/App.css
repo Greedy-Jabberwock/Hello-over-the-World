@@ -1,3 +1,4 @@
-.App {
-  text-align: center;
+#MapContainer {
+    position: relative;
+    height: 90vh;
 }

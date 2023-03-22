@@ -3,30 +3,28 @@ import db from "../config/db.js";
 
 const { DataTypes } = Sequelize;
 
-const Places = db.define(
-    'places',
+const Place = db.define(
+    'place',
     {
-        place_id: {
+        id: {
             type: DataTypes.INTEGER,
-            autoIncrementIdentity: true
+            autoIncrement: true,
+            allowNull: false,
+            primaryKey: true
         },
         name: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        coordinates: {
-            type: DataTypes.STRING,
+        latitude: {
+            type: DataTypes.FLOAT,
             allowNull: false,
         },
-        fk_country_id: {
-            type: DataTypes.INTEGER,
+        longitude: {
+            type: DataTypes.FLOAT,
             allowNull: false
         }
-    },
-    {
-        timestamps: false,
-        freezeTableName: true
     }
 );
 
-export default Countries;
+export default Place;

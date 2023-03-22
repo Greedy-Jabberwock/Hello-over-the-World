@@ -2,7 +2,7 @@ import { Navbar } from 'react-bootstrap';
 
 const Header = () => {
     return (
-        <Navbar className='px-5 bg-info' fixed='top'>
+        <Navbar className='px-5 bg-info'>
             <Navbar.Brand href="#home">Hello over the World</Navbar.Brand>
             <Navbar.Toggle />
             <Navbar.Collapse className="justify-content-end">
