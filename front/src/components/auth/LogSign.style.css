@@ -1,0 +1,14 @@
+#auth-menu {
+    position: absolute;
+    top: 30%;
+    left: 30%;
+    height: 50%;
+    width: 40%;
+    background-color: aquamarine;
+    opacity: 100;
+    border-radius: 10px;
+}
+
+#auth-menu, button {
+    text-align: center;
+}

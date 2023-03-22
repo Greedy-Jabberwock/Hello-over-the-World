@@ -16,14 +16,14 @@ export const getUsers = async (req, res) => {
 }
 
 export const register = async(req, res) => {
-    console.log('Register route...');
-    console.log('-- Request body: ', req.body);
-    const {username, email, password} = req.body;
-    console.log('Hashing password...');
-    const salt = await bcrypt.genSalt();
-    const hashed_password = await bcrypt.hash(password, salt);
-    console.log('-- Hashed password: ', hashed_password);
-    try {
+    try {    
+        console.log('Register route...');
+        console.log('-- Request body: ', req.body);
+        const {username, email, password} = req.body;
+        console.log('Hashing password...');
+        const salt = await bcrypt.genSalt();
+        const hashed_password = await bcrypt.hash(password, salt);
+        console.log('-- Hashed password: ', hashed_password);
         console.log('Creating usser record...');
         await User.create(
             {   
@@ -36,7 +36,7 @@ export const register = async(req, res) => {
         res.status(200).json({msg: "Register Successful"});
     } catch (error) {
         console.log('Failure');
-        res.status(404).json({msg: error});
+        res.status(404).json({msg: 'This username or email already exists, try another.'});
     }
 }
 
