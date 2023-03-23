@@ -5,24 +5,47 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Third parties
 import { useState } from 'react';
+import PAGES from './pages.const.js';
 
 // My components
 import Header from './components/Header.js';
-import GLMap from './components/Map.js';
+import GLMap from './components/map/Map.js';
 import Footer from './components/Footer.js';
 import LogSign from './components/auth/LogSign.js'
+import Account from './components/account/Account.js';
 
 function App() {
 
+  
+
+  const [currentPage, setPage] = useState(PAGES.map);
   const [showMenu, setShowMenu] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
 
+  const renderComponent = () => {
+    switch(currentPage) {
+      case PAGES.map: 
+        return <GLMap id='Map' />
+      case PAGES.account:
+        return <Account currentUser={currentUser}/>
+    }
+  }
+
   return (
     <div className="App">
-        <Header showMenu={showMenu} setShowMenu={setShowMenu} currentUser={currentUser} setCurrentUser={setCurrentUser}/>
-        <GLMap id='Map'/>
-        {showMenu && <LogSign setCurrentUser={setCurrentUser} setShowMenu={setShowMenu}/>}
-        <Footer/>
+      <Header
+        showMenu={showMenu}
+        setShowMenu={setShowMenu}
+        currentUser={currentUser}
+        setCurrentUser={setCurrentUser}
+        setPage={setPage}
+      />
+      
+      {renderComponent()}
+
+      {showMenu && <LogSign setCurrentUser={setCurrentUser} setShowMenu={setShowMenu} />}
+      
+      <Footer />
     </div>
   );
 }

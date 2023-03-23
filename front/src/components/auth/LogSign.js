@@ -18,13 +18,14 @@ const LogSign = (props) => {
             activeIndex={index}
             onSelect={handleSelect}
             interval={null}
-            indicators={false} 
+            indicators={false}
+            variant='dark'
             >
             <Carousel.Item>
                 <Login setShowMenu={props.setShowMenu} setCurrentUser={props.setCurrentUser} />
             </Carousel.Item>
             <Carousel.Item>
-                <Register />
+                <Register setIndex={setIndex}/>
             </Carousel.Item>
         </Carousel>
     )

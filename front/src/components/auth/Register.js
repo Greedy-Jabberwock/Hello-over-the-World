@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 
-const Register = () => {
+const Register = (props) => {
 
     const [successMessage, setSuccessMessage] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
@@ -13,9 +13,7 @@ const Register = () => {
         setSuccessMessage(null);
         console.log('Register submitted');
         const elements = e.target.elements;
-        const getValue = (key) => {
-            return elements[key].value;
-        }
+        const getValue = key => elements[key].value;
         const username = getValue('username');
         const email = getValue('email');
         const password = getValue('password');
@@ -23,6 +21,7 @@ const Register = () => {
         try {
             const response = await axios.post('http://localhost:3003/api/users/register', user_data);
             setSuccessMessage(response.data.msg);
+            setTimeout(props.setIndex(1), 1000)
         } catch (error) {
             setErrorMessage(error.response.data.msg);
         }

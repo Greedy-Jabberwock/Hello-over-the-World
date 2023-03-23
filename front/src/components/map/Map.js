@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Map, { Marker, Popup } from 'react-map-gl';
 import axios from 'axios';
 import { LocationOn } from "@mui/icons-material";
+import { Offcanvas } from 'react-bootstrap';
 
 //customdata to test -> TO DELETE
 // import data from '../json/custom.json'
@@ -19,7 +20,7 @@ const GLMap = () => {
 
     const [points, setPoints] = useState([]);
     const [selectedPoint, setSelectedPoint] = useState(null);
-    const [showPopup, setShowPopup] = useState(true);
+    const [show, setShow] = useState(false);
 
     useEffect(() => {
         const fetchPlaces = async () => {
@@ -29,9 +30,13 @@ const GLMap = () => {
         fetchPlaces();
     }, [])
 
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     const handleMarkerClick = (point) => {
         setSelectedPoint(point);
     };
+
 
     // RENDERING
 
@@ -56,21 +61,31 @@ const GLMap = () => {
                                 longitude={point.longitude}
 
                             >
-                                <LocationOn onClick={() => handleMarkerClick(point)} />
+                                <LocationOn onClick={() => {
+                                    handleMarkerClick(point);
+                                    handleShow();
+                                    }} />
                             </Marker>
-                            {selectedPoint === point && (<Popup
-                                longitude={point.longitude}
-                                latitude={point.latitude}
-                                anchor='left'
-                                closeOnClick={false}
-                                onClose={() => setShowPopup(false)}
-                            >
-                                <div>{point.name}</div>
-                            </Popup>)}
                         </div>
                     )
                 })}
             </Map>
+            {selectedPoint &&
+                <Offcanvas show={show} onHide={handleClose}>
+                    <Offcanvas.Header closeButton>
+                        <Offcanvas.Title>{selectedPoint.name}</Offcanvas.Title>
+                    </Offcanvas.Header>
+                    <Offcanvas.Body>
+                        {selectedPoint.articles.length > 0 
+                            ? 
+                            selectedPoint.articles.map(article => {
+                                return <div>{article.title}</div>
+                            })
+                            :
+                            <div>There are no articles yet. Be first!</div>
+                        }
+                    </Offcanvas.Body>
+                </Offcanvas>}
         </section>
     )
 

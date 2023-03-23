@@ -7,6 +7,7 @@ import db from "./config/db.js";
 
 import users_router from './routes/Users.js';
 import places_router from "./routes/Places.js";
+import articles_router from "./routes/Articles.js";
 
 
 dotenv.config();
@@ -26,6 +27,7 @@ app.listen(PORT || 8080, HOST, () => {
 
 app.use('/api/users', users_router);
 app.use('/api/places', places_router);
+app.use('/api/articles', articles_router);
 
 try {
     await db.authenticate();
