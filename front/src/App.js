@@ -8,15 +8,14 @@ import { useState } from 'react';
 import PAGES from './pages.const.js';
 
 // My components
-import Header from './components/Header.js';
+import Header from './components/common/Header.js';
+import Footer from './components/common/Footer.js';
 import GLMap from './components/map/Map.js';
-import Footer from './components/Footer.js';
 import LogSign from './components/auth/LogSign.js'
 import Account from './components/account/Account.js';
+import Articles from './components/articles/Articles.js';
 
 function App() {
-
-  
 
   const [currentPage, setPage] = useState(PAGES.map);
   const [showMenu, setShowMenu] = useState(false);
@@ -28,6 +27,10 @@ function App() {
         return <GLMap id='Map' />
       case PAGES.account:
         return <Account currentUser={currentUser}/>
+      case PAGES.articles:
+        return <Articles/>
+      default:
+        return ''
     }
   }
 

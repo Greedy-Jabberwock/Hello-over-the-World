@@ -6,30 +6,43 @@ import { Op } from "sequelize";
 
 export const getUsers = async (req, res) => {
     try {
-        console.log('Search users');
         const users = await User.findAll();
-        console.log(users);
         res.json(users);
     } catch (error) {
-        res.status(404).json({msg: error});
+        res.status(404).json({ msg: error });
     }
 }
 
-export const register = async(req, res) => {
-    try {    
-        const {username, email, password} = req.body;
+export const getUser = async (req, res) => {
+    try {
+        const { userId } = req.body;
+        const user = await User.findByPk(
+            userId,
+            {
+                attributes: ['username', 'email', 'createdAt']
+            }
+        );
+        res.json(user);
+    } catch (error) {
+        res.status(404).json({ msg: error });
+    }
+}
+
+export const register = async (req, res) => {
+    try {
+        const { username, email, password } = req.body;
         const salt = await bcrypt.genSalt();
         const hashed_password = await bcrypt.hash(password, salt);
         await User.create(
-            {   
+            {
                 username: username.toLowerCase(),
                 email: email.toLowerCase(),
                 password: hashed_password
             }
         );
-        res.status(200).json({msg: "Register Successful, you can log in now!"});
+        res.status(200).json({ msg: "Register Successful, you can log in now!" });
     } catch (error) {
-        res.status(404).json({msg: 'This username or email already exists, try another.'});
+        res.status(404).json({ msg: 'This username or email already exists, try another.' });
     }
 }
 
@@ -39,8 +52,8 @@ export const login = async (req, res) => {
             {
                 where: {
                     [Op.or]: [
-                        {username: req.body.value.toLowerCase()},
-                        {email: req.body.value.toLowerCase()}
+                        { username: req.body.value.toLowerCase() },
+                        { email: req.body.value.toLowerCase() }
                     ]
                 }
             }
@@ -49,18 +62,19 @@ export const login = async (req, res) => {
             req.body.password,
             user.password
         );
-        
+
         if (!match) {
             return res
-                    .status(400)
-                    .json({msg: 'Wrong password'});
+                .status(400)
+                .json({ msg: 'Wrong password' });
         }
-        const { userid, email, username } = user;
+        const { id, email, username, createdAt } = user;
         const token = jwt.sign(
             {
-                userid,
+                id,
                 username,
-                email
+                email,
+                createdAt
             },
             process.env.ACCESS_TOKEN,
             {
@@ -68,18 +82,18 @@ export const login = async (req, res) => {
             }
         );
         res.cookie(
-            'accesstoken', 
+            'accesstoken',
             token,
             {
                 httpOnly: true,
                 maxAge: 30 * 60 * 1000
             }
         );
-        res.json({token});
+        res.json({ token });
 
     } catch (error) {
         res
-        .status(404)
-        .json({msg: "Email or username not found"});
+            .status(404)
+            .json({ msg: "Email or username not found" });
     }
 }

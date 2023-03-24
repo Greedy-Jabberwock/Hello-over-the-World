@@ -15,6 +15,15 @@ export const getPlaces = async (req, res) => {
     }
 };
 
+export const getPlacesNames = async (req, res) => {
+    try {
+        let places = await Place.findAll({attributes:['name']});
+        res.json(places)
+    } catch (error) {
+        res.status(404).send(error)
+    }
+}
+
 export const addPlace = async (req, res) => {
     try {
         const { name, latitude, longitude } = req.body;

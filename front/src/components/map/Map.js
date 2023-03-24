@@ -1,13 +1,10 @@
 import './Map.style.css';
 
 import { useState, useEffect } from 'react';
-import Map, { Marker, Popup } from 'react-map-gl';
+import Map, { Marker } from 'react-map-gl';
 import axios from 'axios';
 import { LocationOn } from "@mui/icons-material";
 import { Offcanvas } from 'react-bootstrap';
-
-//customdata to test -> TO DELETE
-// import data from '../json/custom.json'
 
 const GLMap = () => {
 

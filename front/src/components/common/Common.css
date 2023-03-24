@@ -1,0 +1,12 @@
+.content-container {
+    position: absolute;
+    width: 65vw;
+    height: 81vh;
+    margin: 3.6vh 0;
+    left: 15.5vw;
+    border-radius: 10px;
+    border-style:inset;
+    border-color: aquamarine;
+    text-align: center;
+    background-color: aliceblue;
+}

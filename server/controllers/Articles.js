@@ -11,7 +11,14 @@ Article.belongsTo(Place);
 
 export const getArticles = async (req, res) => {
     try {
-        const allArticles = await Article.findAll();
+        const allArticles = await Article.findAll({
+            include: [
+                {
+                    model: User,
+                    attributes: ['username']
+                }
+            ]
+        });
         res.json(allArticles);
     } catch (error) {
         res.status(404).json({msg: error.message});

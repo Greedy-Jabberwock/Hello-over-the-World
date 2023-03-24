@@ -1,0 +1,19 @@
+#articles-container > div:first-child {
+    height: 100%;
+}
+
+#create-article-button {
+    background-color: green;
+    color: white!important
+}
+
+#search-field {
+    background-color: aliceblue;
+}
+
+.title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
