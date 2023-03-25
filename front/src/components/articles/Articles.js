@@ -2,6 +2,7 @@ import '../common/Common.css';
 import './Articles.css'
 
 import PAGES from '../../pages.const';
+import BASE_URL from '../../utils/getBaseUrl';
 
 import {
     ListGroup,
@@ -17,7 +18,7 @@ const Articles = (props) => {
     const [filteredArticles, setFilteredArticles] = useState(null);
 
     const fetchArticles = async () => {
-        const articles_data = await axios.get('http://localhost:3003/api/articles');
+        const articles_data = await axios.get(`${BASE_URL}/api/articles`);
         setArticles(articles_data.data);
         setFilteredArticles(articles_data.data);
     }

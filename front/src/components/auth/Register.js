@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
+import BASE_URL from '../../utils/getBaseUrl.js'
 
 const Register = (props) => {
 
@@ -18,7 +19,7 @@ const Register = (props) => {
         const password = getValue('password');
         const user_data = { username, email, password };
         try {
-            const response = await axios.post('http://localhost:3003/api/users/register', user_data);
+            const response = await axios.post(`${BASE_URL}/api/users/register`, user_data);
             setSuccessMessage(response.data.msg);
             setTimeout(props.setIndex(1), 1000)
         } catch (error) {

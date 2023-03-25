@@ -20,7 +20,7 @@ const Article = (props) => {
     const handleShow = () => setShow(true);
 
     const fetchUsername = async (id) => {
-        const response = await axios.get(`http://localhost:3003/api/users/user/${id}`);
+        const response = await axios.get(`${BASE_URL}/api/users/user/${id}`);
         setAuthor(response.data.username);
     }
 

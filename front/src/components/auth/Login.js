@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
+import BASE_URL from '../../utils/getBaseUrl.js'
 
 const Login = (props) => {
 
@@ -12,7 +13,7 @@ const Login = (props) => {
         const username = e.target.elements.username.value;
         const password = e.target.elements.password.value;
         try {
-            const response = await axios.post('http://localhost:3003/api/users/login',
+            const response = await axios.post(`${BASE_URL}/api/users/login`,
                 {
                     value: username,
                     password

@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import { getToken } from "../../utils/getToken.js";
+import BASE_URL from '../../utils/getBaseUrl.js'
 
 const CommentForm = (props) => {
 
@@ -12,7 +13,7 @@ const CommentForm = (props) => {
     const [comments, setComments] = useState([]);
 
     const fetchComments = async () => {
-        const com_response = await axios.get(`http://localhost:3003/api/articles/article_comments/${props.articleId}`);
+        const com_response = await axios.get(`${BASE_URL}/api/articles/article_comments/${props.articleId}`);
         setComments(com_response.data);
     }
 
@@ -32,7 +33,7 @@ const CommentForm = (props) => {
                     userId: props.currentUser.id,
                     articleId: props.articleId
                 }
-                await axios.put('http://localhost:3003/api/articles/add_comment', data, {
+                await axios.put(`${BASE_URL}/api/articles/add_comment`, data, {
                     headers: {
                         'x-access-token': getToken()
                     }

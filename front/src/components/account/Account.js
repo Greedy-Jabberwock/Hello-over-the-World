@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 
 import axios from 'axios';
 import { getToken, getDecodedToken } from '../../utils/getToken';
+import BASE_URL from '../../utils/getBaseUrl';
 
 const Account = () => {
 
@@ -14,7 +15,7 @@ const Account = () => {
     // const [quizzes, setQuizzes] = useState(null);
 
     const fetchArticles = async () => {
-        const articles_response = await axios.get(`http://localhost:3003/api/articles/user_articles/${user.id}`,
+        const articles_response = await axios.get(`${BASE_URL}/api/articles/user_articles/${user.id}`,
         {headers: {
             'x-access-token': getToken()
         }})

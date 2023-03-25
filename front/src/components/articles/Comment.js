@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import { useState } from 'react';
 import { getToken, getDecodedToken } from '../../utils/getToken';
 import axios from 'axios'
-
+import BASE_URL from '../../utils/getBaseUrl';
 
 const Comment = (props) => {
 
@@ -11,7 +11,7 @@ const Comment = (props) => {
 
     const handleDelete = async () => {
         try {
-            await axios.delete(`http://localhost:3003/api/articles/delete_comment/${props.id}`,
+            await axios.delete(`${BASE_URL}/api/articles/delete_comment/${props.id}`,
                 {
                     headers: {
                         'x-access-token': getToken()
@@ -27,7 +27,7 @@ const Comment = (props) => {
         try {
             const content = document.getElementById('editted').value
             const commentId = props.id;
-            await axios.put('http://localhost:3003/api/articles/edit_comment',
+            await axios.put(`${BASE_URL}/api/articles/edit_comment`,
                 {
                     content,
                     commentId

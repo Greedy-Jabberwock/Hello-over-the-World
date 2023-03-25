@@ -18,6 +18,7 @@ import { LocationOn } from "@mui/icons-material";
 import { Offcanvas } from 'react-bootstrap';
 import PAGES from '../../pages.const.js';
 import giveHint from '../../utils/giveHint.js';
+import BASE_URL from '../../utils/getBaseUrl';
 
 const GLMap = (props) => {
 
@@ -38,7 +39,7 @@ const GLMap = (props) => {
 
     useEffect(() => {
         const fetchPlaces = async () => {
-            const places = await axios.get('http://localhost:3003/api/places');
+            const places = await axios.get(`${BASE_URL}/api/places`);
             setPoints(places.data);
         };
         fetchPlaces();

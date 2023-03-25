@@ -7,6 +7,7 @@ import axios from 'axios';
 
 import PAGES from '../../pages.const';
 import { getToken, getDecodedToken } from '../../utils/getToken';
+import BASE_URL from '../../utils/getBaseUrl';
 
 const ArticleForm = (props) => {
 
@@ -20,7 +21,7 @@ const ArticleForm = (props) => {
 
             const placeInfo = props.newMarkerInfo;
             const userId = getDecodedToken().id;
-            const place_response = await axios.post('http://localhost:3003/api/places/add_place', placeInfo,
+            const place_response = await axios.post(`${BASE_URL}/api/places/add_place`, placeInfo,
                 {
                     headers: {
                         'x-access-token': getToken()
@@ -33,7 +34,7 @@ const ArticleForm = (props) => {
                 userId,
                 placeId
             }
-            await axios.put('http://localhost:3003/api/articles/add_article',
+            await axios.put(`${BASE_URL}/api/articles/add_article`,
                 data,
                 {
                     headers: {
@@ -55,7 +56,7 @@ const ArticleForm = (props) => {
             const content = e.target.elements.content.value;
             const articleId = props.currentArticle.id;
             const data = { title, content, articleId }
-            await axios.put('http://localhost:3003/api/articles/edit_article', data,
+            await axios.put(`${BASE_URL}/api/articles/edit_article`, data,
                 {
                     headers: {
                         'x-access-token': getToken()
