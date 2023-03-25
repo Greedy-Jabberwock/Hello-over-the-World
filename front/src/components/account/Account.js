@@ -1,18 +1,23 @@
 import '../common/Common.css';
 import './Account.style.css';
+
 import { Container, Row, Col, Table } from "react-bootstrap";
-import jwt_decode from 'jwt-decode';
 import { useState, useEffect } from 'react';
+
 import axios from 'axios';
+import { getToken, getDecodedToken } from '../../utils/getToken';
 
 const Account = () => {
 
-    const user = jwt_decode(sessionStorage.getItem('AccessToken'));
-    const [articles, setArticles] = useState(null);
+    const user = getDecodedToken();
+    const [articles, setArticles] = useState([]);
     // const [quizzes, setQuizzes] = useState(null);
 
     const fetchArticles = async () => {
-        const articles_response = await axios.get(`http://localhost:3003/api/articles/user_articles/${user.id}`)
+        const articles_response = await axios.get(`http://localhost:3003/api/articles/user_articles/${user.id}`,
+        {headers: {
+            'x-access-token': getToken()
+        }})
         setArticles(articles_response.data);
     }
 
@@ -44,11 +49,15 @@ const Account = () => {
                             </thead>
                             <tbody>
                                 {
-                                    articles && articles.map(article =>
+                                    articles.length > 0 ? articles.map(article =>
                                         <tr key={article.id}>
                                             <td>{article.title}</td>
                                         </tr>
                                     )
+                                    :
+                                    <tr key="noart">
+                                        <td>No articles yet</td>
+                                    </tr>
                                 }
                             </tbody>
                         </Table>
@@ -68,7 +77,9 @@ const Account = () => {
                                         </tr>
                                     )
                                 } */}
-                                <td>No quizzes yet</td>
+                                <tr key="noqui">
+                                    <td>No quizzes yet</td> 
+                                </tr>
                             </tbody>
                         </Table>
                     </Col>

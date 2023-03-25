@@ -1,14 +1,16 @@
-import Place from '../model/Place.js'
-import Article from '../model/Article.js'
+import Place from '../model/Place.js';
+import Article from '../model/Article.js';
+import User from '../model/User.js';
 import { Op } from 'sequelize';
 
 Place.hasMany(Article);
 Article.belongsTo(Place);
 
-
 export const getPlaces = async (req, res) => {
     try {
-        let places = await Place.findAll({include: Article});
+        let places = await Place.findAll({include: [
+            { model: Article }
+        ]});
         res.json(places)
     } catch (error) {
         res.status(404).send(error)

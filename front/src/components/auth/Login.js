@@ -22,7 +22,6 @@ const Login = (props) => {
             props.setCurrentUser(jwt_decode(token));
             props.setShowMenu(false);
         } catch (error) {
-            console.log(error.response.data.msg);
             setErrorMessage(error.response.data.msg);
         }
     }

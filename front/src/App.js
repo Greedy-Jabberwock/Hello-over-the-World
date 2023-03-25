@@ -16,6 +16,7 @@ import Account from './components/account/Account.js';
 import Articles from './components/articles/Articles.js';
 import Article from './components/articles/Article.js';
 import ArticleForm from './components/articles/ArticleForm.js';
+import Quizzes from './components/quizzes/Quizzes.js'
 
 function App() {
 
@@ -25,19 +26,47 @@ function App() {
   const [currentArticle, setCurrentArticle] = useState(null);
   const [newMarkerInfo, setNewMarkerInfo] = useState(null);
   const [needHint, setNeedHint] = useState(false);
+  const [articleEdit, setArticleEdit] = useState(false);
 
   const renderComponent = () => {
-    switch(currentPage) {
-      case PAGES.map: 
-        return <GLMap id='Map' currentUser={currentUser} setNewMarkerInfo={setNewMarkerInfo} setPage={setPage} needHint={needHint}/>
+    switch (currentPage) {
+      case PAGES.map:
+        return <GLMap id='Map'
+          currentUser={currentUser}
+          setNewMarkerInfo={setNewMarkerInfo}
+          setPage={setPage}
+          needHint={needHint}
+          setCurrentArticle={setCurrentArticle} />
       case PAGES.account:
-        return <Account/>
+        return <Account />
       case PAGES.articles:
-        return <Articles currentUser={currentUser} setCurrentArticle={setCurrentArticle} setPage={setPage} setNeedHint={setNeedHint}/>
+        return <Articles
+          currentUser={currentUser}
+          setCurrentArticle={setCurrentArticle}
+          setPage={setPage}
+          setNeedHint={setNeedHint}
+        />
       case PAGES.article:
-        return <Article currentArticle={currentArticle} currentUser={currentUser} setCurrentUser={setCurrentUser} setPage={setPage}/>
+        return <Article
+          currentArticle={currentArticle}
+          articleEdit={articleEdit}
+          setArticleEdit={setArticleEdit}
+          currentUser={currentUser}
+          setCurrentUser={setCurrentUser}
+          setPage={setPage}
+        />
       case PAGES.new_article:
-        return <ArticleForm currentUser={currentUser} setPage={setPage} newMarkerInfo={newMarkerInfo}/>
+        return <ArticleForm
+          currentUser={currentUser}
+          setPage={setPage}
+          newMarkerInfo={newMarkerInfo}
+          currentArticle={currentArticle}
+          setCurrentArticle={setCurrentArticle}
+          articleEdit={articleEdit}
+          setArticleEdit={setArticleEdit}
+        />
+      case PAGES.quizzes:
+        return <Quizzes />
       default:
         return ''
     }
@@ -52,11 +81,11 @@ function App() {
         setCurrentUser={setCurrentUser}
         setPage={setPage}
       />
-      
+
       {renderComponent()}
 
       {showMenu && <LogSign setCurrentUser={setCurrentUser} setShowMenu={setShowMenu} />}
-      
+
       <Footer />
     </div>
   );

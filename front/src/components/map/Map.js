@@ -5,13 +5,14 @@ import {
     useEffect,
     useRef
 } from 'react';
-import Map,
+import
+Map,
 {
     Marker,
     GeolocateControl,
     NavigationControl
 } from 'react-map-gl';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, ListGroup } from 'react-bootstrap';
 import axios from 'axios';
 import { LocationOn } from "@mui/icons-material";
 import { Offcanvas } from 'react-bootstrap';
@@ -88,9 +89,10 @@ const GLMap = (props) => {
                             <Marker
                                 latitude={point.latitude}
                                 longitude={point.longitude}
-
+                                scale={3}
                             >
-                                <LocationOn onClick={() => {
+                                <LocationOn 
+                                    onClick={() => {
                                     handleMarkerClick(point);
                                     handleShow();
                                 }} />
@@ -109,9 +111,20 @@ const GLMap = (props) => {
                     <Offcanvas.Body>
                         {selectedPoint.articles.length > 0
                             ?
-                            selectedPoint.articles.map(article => {
-                                return <div>{article.title}</div>
-                            })
+                            <ListGroup>
+                                {selectedPoint.articles.map(article => {
+                                    return (
+                                        <ListGroup.Item
+                                            action variant='info'
+                                            onClick={() => {
+                                                props.setCurrentArticle(article);
+                                                props.setPage(PAGES.article);
+                                            }}>
+                                            {article.title}
+                                        </ListGroup.Item>
+                                    )
+                                })}
+                            </ListGroup>
                             :
                             <div>There are no articles yet. Be first!</div>
                         }

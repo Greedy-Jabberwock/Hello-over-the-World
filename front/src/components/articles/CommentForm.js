@@ -23,7 +23,6 @@ const CommentForm = (props) => {
         if (!token) {
             setError('Not authorized');
             props.setCurrentUser(null);
-            console.log('No token found');
             return null;
         }
         if (val) {
@@ -40,6 +39,7 @@ const CommentForm = (props) => {
                 });
                 await fetchComments();
                 setError(null);
+                e.target.elements.content.value = '';
             } else {
                 setError('Comment must be at least 4 symbols length.')
             }

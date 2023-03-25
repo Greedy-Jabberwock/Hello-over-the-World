@@ -1,11 +1,12 @@
 .fixed-right {
     position: absolute;
     right: 21vw;
-    top: 15vh;
+    top: 16vh;
 }
 
 #article-title {
     margin-top: 2vh;
+    font-size: 1.4rem;
     font-weight: 600;
     font-style: italic;
 }

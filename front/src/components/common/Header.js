@@ -26,7 +26,7 @@ const Header = (props) => {
                 </Nav.Item>
                 <Nav.Item className='mx-5'>
                     <Nav.Link
-                    // onClick={() => setPage(PAGES.quizzes)} 
+                    onClick={() => setPage(PAGES.quizzes)} 
                     ><h4 className='smoke'>Quizzes</h4></Nav.Link>
                 </Nav.Item>
             </Navbar.Collapse>

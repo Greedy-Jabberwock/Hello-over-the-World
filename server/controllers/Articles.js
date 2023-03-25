@@ -65,7 +65,6 @@ export const createArticle = async (req, res) => {
         const { title, content, userId, placeId } = req.body;
         const user = await User.findOne({ where: userId });
         const place = await Place.findOne({ where: placeId });
-
         const checker = await Article.findOne({
             where: {
                 [Op.or]: [
@@ -90,6 +89,18 @@ export const createArticle = async (req, res) => {
     }
 }
 
+export const editArticle = async (req, res) => {
+    try {
+        const { articleId, title, content } = req.body;
+        const article = await Article.findByPk(articleId);
+        article.set({title, content});
+        await article.save()
+        res.json(article);
+    } catch (error) {
+        res.status(404).json({msg: error.message});
+    }
+}
+
 export const addComment = async (req, res) => {
     try {
         const { content, userId, articleId } = req.body;
@@ -99,11 +110,23 @@ export const addComment = async (req, res) => {
         const new_comment = await Comment.create({ content });
         await new_comment.setUser(user);
         await new_comment.setArticle(article);
-        res.json({msg: 'Comment created'});
+        res.json({ msg: 'Comment created' });
     } catch (error) {
         res.status(404).json(error);
     }
 
+}
+
+export const editComment = async (req, res) => {
+    try {
+        const { commentId, content } = req.body;
+        const comment = await Comment.findByPk(commentId);
+        comment.content = content;
+        await comment.save();
+        res.json(comment);
+    } catch (error) {
+        res.status(404).json({ msg: error.message })
+    }
 }
 
 export const getArticleComments = async (req, res) => {

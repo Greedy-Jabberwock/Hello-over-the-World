@@ -11,7 +11,6 @@ const Register = (props) => {
         e.preventDefault();
         setErrorMessage(null);
         setSuccessMessage(null);
-        console.log('Register submitted');
         const elements = e.target.elements;
         const getValue = key => elements[key].value;
         const username = getValue('username');
