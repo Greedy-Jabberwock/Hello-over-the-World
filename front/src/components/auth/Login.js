@@ -28,7 +28,7 @@ const Login = (props) => {
 
     return (
         <Form onSubmit={handleSubmit}>
-            <Form.Label className="pt-4 mb-4">Login</Form.Label>
+            <Form.Label className="pt-4 mb-4"><h3>Login</h3></Form.Label>
 
             <Form.Group className="mb-4 mx-5 px-4" controlId="formBasicEmail">
                 <Form.Control name="username" type="text" placeholder="Enter your email or username" />

@@ -28,7 +28,7 @@ const Register = (props) => {
 
     return (
         <Form onSubmit={handleSubmit}>
-            <Form.Label className="pt-4">Register</Form.Label>
+            <Form.Label className="pt-4"><h3>Register</h3></Form.Label>
 
             <Form.Group className="mb-3 mx-5 px-4" controlId="formBasicEmail">
                 <Form.Control className="mt-3" name="username" type="text" placeholder="Enter your username" />
