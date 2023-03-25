@@ -10,3 +10,16 @@
     text-align: center;
     background-color: aliceblue;
 }
+
+.back-button {
+    font-size: 1rem;
+    position: absolute;
+    left: 1vw;
+    top: 1vh;
+    border-radius: 6vh;
+    padding: 0 1vh;
+}
+
+.bg-common {
+    color: 131526;
+}

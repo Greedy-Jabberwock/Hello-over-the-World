@@ -17,7 +17,7 @@ const Login = (props) => {
                     value: username,
                     password
                 });
-            const token = response.data.token
+            const token = response.data.token;
             sessionStorage.setItem('AccessToken', token);
             props.setCurrentUser(jwt_decode(token));
             props.setShowMenu(false);

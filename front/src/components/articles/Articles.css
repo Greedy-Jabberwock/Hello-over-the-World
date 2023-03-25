@@ -3,12 +3,23 @@
 }
 
 #create-article-button {
-    background-color: green;
-    color: white!important
+    background-color: green!important;
+    color: white!important;
+    margin: 0vw 1vw;
 }
 
 #search-field {
     background-color: aliceblue;
+}
+
+#showing-list {
+    border: none;
+    background-color: #ced7bd;
+    border-radius: 15px;
+    padding: 0px 7px 2px;
+    position: absolute;
+    left: 33%;
+    top: 50%;
 }
 
 .title {
@@ -16,4 +27,8 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+}
+
+.bl-1 {
+    border-left: 1px solid gray;
 }

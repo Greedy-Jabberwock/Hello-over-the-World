@@ -40,9 +40,9 @@ export const addPlace = async (req, res) => {
 
         const new_place = { name, latitude, longitude }
 
-        await Place.create(new_place);
+        const new_record = await Place.create(new_place, {returning: ['id']});
 
-        res.json({ msg: `Place ${name} added to database` })
+        res.json(new_record)
 
     } catch (error) {
         res.status(418).json({ msg: error.message });

@@ -1,12 +1,24 @@
 import './Map.style.css';
 
-import { useState, useEffect } from 'react';
-import Map, { Marker } from 'react-map-gl';
+import {
+    useState,
+    useEffect,
+    useRef
+} from 'react';
+import Map,
+{
+    Marker,
+    GeolocateControl,
+    NavigationControl
+} from 'react-map-gl';
+import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { LocationOn } from "@mui/icons-material";
 import { Offcanvas } from 'react-bootstrap';
+import PAGES from '../../pages.const.js';
+import giveHint from '../../utils/giveHint.js';
 
-const GLMap = () => {
+const GLMap = (props) => {
 
     // HOOKS
     const [viewport, setViewport] = useState({
@@ -17,7 +29,11 @@ const GLMap = () => {
 
     const [points, setPoints] = useState([]);
     const [selectedPoint, setSelectedPoint] = useState(null);
-    const [show, setShow] = useState(false);
+    const [showSelected, setShowSelected] = useState(false);
+    const [showCreating, setShowCreating] = useState(false);
+    const [newMarkerCoord, setNewMarkerCoord] = useState(null);
+
+    const geolocateControlRef = useRef([]);
 
     useEffect(() => {
         const fetchPlaces = async () => {
@@ -25,15 +41,27 @@ const GLMap = () => {
             setPoints(places.data);
         };
         fetchPlaces();
+        props.needHint && giveHint();
     }, [])
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleSelectedClose = () => setShowSelected(false);
+    const handleCreatingClose = () => setShowCreating(false);
+    const handleShow = () => setShowSelected(true);
 
     const handleMarkerClick = (point) => {
         setSelectedPoint(point);
     };
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const data = {
+            name: e.target.elements.name.value,
+            latitude: newMarkerCoord.lat,
+            longitude: newMarkerCoord.lng
+        };
+        props.setNewMarkerInfo(data);
+        props.setPage(PAGES.new_article);
+    }
 
     // RENDERING
 
@@ -45,6 +73,10 @@ const GLMap = () => {
                 mapStyle="mapbox://styles/mapbox/streets-v9"
                 onMove={e => {
                     setViewport(e.viewport);
+                }}
+                onContextMenu={(e) => {
+                    setNewMarkerCoord(e.lngLat);
+                    setShowCreating(true);
                 }}
                 attributionControl={true}
                 projection='globe'
@@ -61,26 +93,70 @@ const GLMap = () => {
                                 <LocationOn onClick={() => {
                                     handleMarkerClick(point);
                                     handleShow();
-                                    }} />
+                                }} />
                             </Marker>
                         </div>
                     )
                 })}
+                <GeolocateControl ref={geolocateControlRef} />
+                <NavigationControl />
             </Map>
             {selectedPoint &&
-                <Offcanvas show={show} onHide={handleClose}>
+                <Offcanvas show={showSelected} onHide={handleSelectedClose}>
                     <Offcanvas.Header closeButton>
                         <Offcanvas.Title>{selectedPoint.name}</Offcanvas.Title>
                     </Offcanvas.Header>
                     <Offcanvas.Body>
-                        {selectedPoint.articles.length > 0 
-                            ? 
+                        {selectedPoint.articles.length > 0
+                            ?
                             selectedPoint.articles.map(article => {
                                 return <div>{article.title}</div>
                             })
                             :
                             <div>There are no articles yet. Be first!</div>
                         }
+                    </Offcanvas.Body>
+                </Offcanvas>}
+
+            {showCreating &&
+                <Offcanvas show={showCreating} placement='end' onHide={handleCreatingClose}>
+                    <Offcanvas.Header closeButton>
+                        <Offcanvas.Title>New place menu</Offcanvas.Title>
+                    </Offcanvas.Header>
+                    <Offcanvas.Body>
+                        <div>Coordinates: </div>
+                        <ul>
+                            <li><b>Latitude: </b>{newMarkerCoord.lat}</li>
+                            <li><b>Longitude: </b>{newMarkerCoord.lng}</li>
+                        </ul>
+                        <Form onSubmit={handleSubmit}>
+                            <Form.Group
+                                className="mb-3"
+                                controlId="formBasicEmail"
+                            >
+                                <Form.Label>Place name:</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name='name'
+                                    placeholder="Enter name of this place..."
+                                    minLength={5}
+                                    maxLength={50}
+                                />
+                                <Form.Text className="text-muted my-2">
+                                    Marker can't be empty, so you will need to create an article or quizz about this place.
+                                </Form.Text>
+                                <br />
+                                {props.currentUser ?
+                                    <Button variant="primary" type="submit">
+                                        Add article
+                                    </Button>
+                                    :
+                                    <Button variant="danger" disabled type="submit">
+                                        You need authorize to continue
+                                    </Button>
+                                }
+                            </Form.Group>
+                        </Form>
                     </Offcanvas.Body>
                 </Offcanvas>}
         </section>

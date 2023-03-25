@@ -1,109 +1,116 @@
 import '../common/Common.css';
 import './Articles.css'
 
+import PAGES from '../../pages.const';
+
 import {
-    Col,
     ListGroup,
-    Row,
-    Tab,
-    Form
+    Form,
+    Table
 } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const Articles = () => {
+const Articles = (props) => {
 
     const [articles, setArticles] = useState(null);
-    const [places, setPlaces] = useState(null);
+    const [filteredArticles, setFilteredArticles] = useState(null);
 
     const fetchArticles = async () => {
         const articles_data = await axios.get('http://localhost:3003/api/articles');
         setArticles(articles_data.data);
+        setFilteredArticles(articles_data.data);
     }
 
-    const fetchPlaces = async () => {
-        const places_names = await axios.get('http://localhost:3003/api/places/names');
-        setPlaces(places_names.data);
+    const handleChange = (e) => {
+        const filtered = articles.filter(article => article.title.toLowerCase().includes(e.target.value.toLowerCase()))
+        setFilteredArticles(filtered);
     }
 
     useEffect(() => {
         fetchArticles();
-        fetchPlaces();
     }, [])
 
     return (
         <section className='content-container' id='articles-container'>
+            <div list-of-articles>
+                <ListGroup>
+                    <ListGroup.Item id='search-field'>
+                        <Form>
+                            <Form.Control
+                                type="text"
+                                placeholder="Search article..."
+                                onChange={handleChange}
+                            />
+                        </Form>
+                    </ListGroup.Item>
 
-            {articles ?
-                <Tab.Container id="list-group-tabs" defaultActiveKey="#link1">
-                    <Row>
-                        <Col sm={4} style={{ borderRight: 1 + 'px' }}>
-                            <ListGroup>
-                                <ListGroup.Item id='search-field'>
-                                    <Form>
-                                        <Form.Control 
-                                            type="text" 
-                                            placeholder="Search place..." 
-                                            onChange={(e) => console.log(e.target.value)}
-                                        />
-                                    </Form>
-                                </ListGroup.Item>
-                                <>
-                                    {articles.map((article) => {
-                                        const { id, title } = article;
-                                        const { username } = article.user;
-                                        // const { username } = article.user;
+                    <ListGroup.Item>
+                        {filteredArticles && filteredArticles.length > 0 ?
+                            <Table striped bordered hover>
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>About</th>
+                                        <th>Written by</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {filteredArticles.map(article => {
                                         return (
-                                            <div key={id}>
-                                                <ListGroup.Item action href={`#article${id}`}>
-                                                    <div className='title'>
-                                                        <span>{title}</span>
-                                                        <span>Written by {username}</span>
-                                                    </div>
-                                                </ListGroup.Item>
-                                            </div>)
+                                            <tr key={article.id}>
+                                                <td onClick={() => {
+                                                    props.setCurrentArticle(article);
+                                                    props.setPage(PAGES.article);
+                                                }}>{article.title}</td>
+                                                <td>{article.place.name}</td>
+                                                <td>{article.user.username}</td>
+                                            </tr>
+                                        )
                                     })}
-                                </>
-                                <ListGroup.Item
-                                    key={'new'}
-                                    action
-                                    href="#create_new"
-                                    className='create-article-button'
-                                    onMouseOver={e => {
-                                        e.target.style.backgroundColor = 'darkgreen';
-                                    }}
-                                    onMouseOut={e => {
-                                        e.target.style.backgroundColor = 'green';
-                                    }}
-                                >
-                                    Create new one
-                                </ListGroup.Item>
+                                </tbody>
+                            </Table>
+                            :
+                            <div>Sorry, but I can't find any articles about this place.</div>
+                        }
+                    </ListGroup.Item>
 
-                            </ListGroup>
-                        </Col>
-                        <Col sm={8}>
-                            <Tab.Content>
-                                {articles.map(article => {
-                                    const { id, content } = article;
-                                    const _href = `#article${id}`
-                                    return (
-                                        <Tab.Pane eventKey={_href}>
-                                            {content}
-                                        </Tab.Pane>
-                                    )
-                                })}
-                                <Tab.Pane eventKey="#create_new">
-                                    Creating new article
-                                </Tab.Pane>
-                            </Tab.Content>
-                        </Col>
-                    </Row>
-                </Tab.Container>
-                :
-                <div>There is no articles about this place yet! Be the first!</div>}
+                    {
+                        props.currentUser ?
+                            <ListGroup.Item
+                                key={'new'}
+                                className='create-article-button'
+                                style={{ backgroundColor: 'green', color: 'white' }}
+                                onClick={() => {
+                                    props.setCurrentArticle(null);
+                                    props.setNeedHint(true);
+                                    props.setPage(PAGES.map);
+                                }}
+                                onMouseOver={e => {
+                                    e.target.style.backgroundColor = 'darkgreen';
+                                }}
+                                onMouseOut={e => {
+                                    e.target.style.backgroundColor = 'green';
+                                }}
+                            >
+                                Create new one
+                            </ListGroup.Item>
+                            :
+                            <ListGroup.Item 
+                                key={'error'}
+                                className='create-article-button disabled'
+                                style={{ backgroundColor: 'red', color: 'white' }}
+                            >
+                                You need to authorize to create new articles.
+                            </ListGroup.Item>
+                    }
 
+
+                </ListGroup>
+            </div>
         </section>
     )
 }
 
 export default Articles;
+

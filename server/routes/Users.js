@@ -10,8 +10,8 @@ import { verifyToken } from "../middlewares/verifyToken.js";
 const users_router = express.Router();
 
 users_router
-.get('/all', getUsers)
-.get('/user', getUser)
+.get('/all', verifyToken, getUsers)
+.get('/user', verifyToken, getUser)
 .post('/register', register)
 .post('/login', login)
 

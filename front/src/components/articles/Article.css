@@ -1,0 +1,23 @@
+.fixed-right {
+    position: absolute;
+    right: 21vw;
+    top: 15vh;
+}
+
+#article-title {
+    margin-top: 2vh;
+    font-weight: 600;
+    font-style: italic;
+}
+
+#article-author {
+    margin-top: 1vh;
+    font-weight: 200;
+    font-style: italic;
+}
+
+.scroller {
+    position: absolute; 
+    left: 2vw; top: 12vh; right: 1vw; bottom: 0; 
+    overflow-y: auto; 
+}

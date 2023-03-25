@@ -1,0 +1,29 @@
+.comment {
+    display: flex;
+    flex-direction: column;
+    padding: 1vw;
+}
+
+.comment-author {
+    align-self: baseline;
+    padding-left: 1vh;
+    margin-bottom: 0.5vh;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.comment-content {
+    padding-left: 5vw;
+    border-radius: 4px;
+    border: 1px solid rgb(209, 206, 206);
+    padding: 1vh 2vw 1vh 2vw;
+    font-size: 1.1em;
+    font-style: oblique;
+}
+
+.comment-control {
+    display: flex;
+    justify-content: end;
+    margin: 0.2vh;
+    gap: 1vw;
+}
