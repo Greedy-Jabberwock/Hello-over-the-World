@@ -33,7 +33,7 @@ const Articles = (props) => {
 
     return (
         <section className='content-container' id='articles-container'>
-            <div list-of-articles>
+            <div>
                 <ListGroup>
                     <ListGroup.Item id='search-field'>
                         <Form>
@@ -96,7 +96,7 @@ const Articles = (props) => {
                                 Create new one
                             </ListGroup.Item>
                             :
-                            <ListGroup.Item 
+                            <ListGroup.Item
                                 key={'error'}
                                 className='create-article-button disabled'
                                 style={{ backgroundColor: 'red', color: 'white' }}
