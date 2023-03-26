@@ -5,13 +5,17 @@ import {
     useEffect,
     useRef
 } from 'react';
-import
-Map,
-{
+import Map from 'react-map-gl';
+import {
     Marker,
     GeolocateControl,
     NavigationControl
 } from 'react-map-gl';
+
+import mapboxgl from 'mapbox-gl/dist/mapbox-gl';
+import MapboxWorker from 'mapbox-gl/dist/mapbox-gl-csp-worker';
+mapboxgl.workerClass = MapboxWorker;
+
 import { Form, Button, ListGroup } from 'react-bootstrap';
 import axios from 'axios';
 import { LocationOn } from "@mui/icons-material";
@@ -20,12 +24,13 @@ import PAGES from '../../pages.const.js';
 import giveHint from '../../utils/giveHint.js';
 import BASE_URL from '../../utils/getBaseUrl';
 
+
 const GLMap = (props) => {
 
     // HOOKS
     const [viewport, setViewport] = useState({
-        longitude: -100,
-        latitude: 40,
+        longitude: 30,
+        latitude: 35,
         zoom: 3
     });
 
