@@ -28,7 +28,7 @@ const GLMap = (props) => {
     const [viewport, setViewport] = useState({
         longitude: 30,
         latitude: 35,
-        zoom: 2
+        zoom: 3
     });
 
     const [points, setPoints] = useState([]);
