@@ -10,7 +10,8 @@ import {
     Marker,
     GeolocateControl,
     NavigationControl
-} from 'react-map-gl';
+} from '!react-map-gl';
+
 import { Form, Button, ListGroup } from 'react-bootstrap';
 import axios from 'axios';
 import { LocationOn } from "@mui/icons-material";
