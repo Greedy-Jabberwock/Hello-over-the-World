@@ -2,8 +2,9 @@ import '../common/Common.css';
 import './Article.css';
 
 import PAGES from '../../pages.const';
-import { getDecodedToken } from '../../utils/getToken';
+import BASE_URL from '../../utils/getBaseUrl';
 import CommentForm from './CommentForm.js';
+
 
 import { Offcanvas, Button } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
