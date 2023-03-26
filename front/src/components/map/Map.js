@@ -5,9 +5,13 @@ import {
     useEffect,
     useRef
 } from 'react';
-import
-Map,
-{
+import Map from 'react-map-gl';
+import mapboxgl from "mapbox-gl"; // This is a dependency of react-map-gl even if you didn't explicitly install it
+
+// eslint-disable-next-line import/no-webpack-loader-syntax
+mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
+
+import {
     Marker,
     GeolocateControl,
     NavigationControl
@@ -20,8 +24,6 @@ import PAGES from '../../pages.const.js';
 import giveHint from '../../utils/giveHint.js';
 import BASE_URL from '../../utils/getBaseUrl';
 
-import mapboxgl from 'mapbox-gl';
-mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default; // eslint-disable-line
 
 const GLMap = (props) => {
 
