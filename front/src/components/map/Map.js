@@ -10,7 +10,7 @@ import {
     Marker,
     GeolocateControl,
     NavigationControl
-} from '!react-map-gl';
+} from 'react-map-gl';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from 'mapbox-gl';
