@@ -36,5 +36,8 @@
   "browserslist": [
     "defaults",
     "not ie 11"
-  ]
+  ],
+  "devDependencies": {
+    "worker-loader": "^3.0.8"
+  }
 }

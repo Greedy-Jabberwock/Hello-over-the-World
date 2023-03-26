@@ -20,6 +20,9 @@ import PAGES from '../../pages.const.js';
 import giveHint from '../../utils/giveHint.js';
 import BASE_URL from '../../utils/getBaseUrl';
 
+import mapboxgl from 'mapbox-gl';
+mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default; // eslint-disable-line
+
 const GLMap = (props) => {
 
     // HOOKS
