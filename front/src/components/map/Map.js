@@ -12,9 +12,9 @@ import {
     NavigationControl
 } from 'react-map-gl';
 
-// @ts-ignore
-// eslint-disable-next-line import/no-webpack-loader-syntax
-import mapboxgl from '!mapbox-gl';
+import mapboxgl from 'mapbox-gl/dist/mapbox-gl';
+import MapboxWorker from 'mapbox-gl/dist/mapbox-gl-csp-worker';
+mapboxgl.workerClass = MapboxWorker;
 
 import { Form, Button, ListGroup } from 'react-bootstrap';
 import axios from 'axios';
