@@ -12,9 +12,6 @@ import {
     NavigationControl
 } from 'react-map-gl';
 
-import mapboxgl from 'mapbox-gl/dist/mapbox-gl';
-import MapboxWorker from 'mapbox-gl/dist/mapbox-gl-csp-worker';
-mapboxgl.workerClass = MapboxWorker;
 
 import { Form, Button, ListGroup } from 'react-bootstrap';
 import axios from 'axios';
@@ -31,7 +28,7 @@ const GLMap = (props) => {
     const [viewport, setViewport] = useState({
         longitude: 30,
         latitude: 35,
-        zoom: 3
+        zoom: 2
     });
 
     const [points, setPoints] = useState([]);
